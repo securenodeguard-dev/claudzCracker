@@ -1,0 +1,25 @@
+.orders-list { display: grid; gap: 16px; }
+.order-card { padding: 20px; border: 1px solid #e3ddf2; }
+.order-header { display: flex; justify-content: space-between; gap: 16px; align-items: center; }
+.order-title-wrap { flex: 1; }
+.order-header h2 { margin: 0; }
+.header-right { display: flex; align-items: center; justify-content: flex-end; }
+.status-badge {
+  background: #fff7d9;
+  color: #7e5610;
+  border: 1px solid #edc96d;
+  border-radius: 999px;
+  padding: 6px 10px;
+  text-transform: capitalize;
+  font-weight: 700;
+}
+.status-actions { display: flex; gap: 10px; flex-wrap: wrap; margin: 12px 0 10px; }
+.status-actions .btn { min-width: 96px; }
+.status-actions .btn:nth-child(2) { background: linear-gradient(135deg, #a97a1d, #d4a64d); }
+.status-actions .btn:nth-child(3) { background: linear-gradient(135deg, #2a6b45, #56b77d); }
+.status-actions .btn:nth-child(4) { background: linear-gradient(135deg, #274d94, #5489d9); }
+.meta-row { display: flex; gap: 16px; flex-wrap: wrap; color: #4d4d4d; margin-top: 10px; }
+.items-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
+.items-table th, .items-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #e8e8e8; }
+.order-footer { margin-top: 16px; text-align: right; }
+@media (max-width: 720px) { .order-header { flex-direction: column; align-items: flex-start; } .header-right { width: 100%; justify-content: flex-start; } }

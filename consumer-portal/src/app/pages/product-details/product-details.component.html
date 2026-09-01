@@ -5,16 +5,45 @@
   <p *ngIf="notFound">Product not found.</p>
 
   <div class="product-detail" *ngIf="product && !loading">
-    <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" class="detail-image" />
+    <img *ngIf="product.imageUrl" [src]="resolveImageUrl(product.imageUrl)" [alt]="product.name" class="detail-image" />
     <div class="info">
       <h1>{{ product.name }}</h1>
-      <p *ngIf="product.showPrice && product.price != null" class="price">₹{{ product.price }}</p>
+      <div *ngIf="product.showPrice" class="price-row">
+        <span *ngIf="product.priceMode === 'offer' && getOriginalPrice() != null" class="original-price">₹{{ getOriginalPrice() }}</span>
+        <span class="price">{{ getDisplayPrice() }}</span>
+      </div>
       <p>{{ product.description }}</p>
+
+      <div *ngIf="getYoutubeEmbedUrl()" class="video-preview">
+        <div class="video-preview-frame">
+          <iframe
+            [src]="getSafeYoutubeEmbedUrl()"
+            title="Product video preview"
+            frameborder="0"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen
+          ></iframe>
+        </div>
+        <button type="button" class="btn btn-outline full-video-btn" (click)="openVideo()">Open full video</button>
+      </div>
 
       <div class="actions">
         <a *ngIf="settings?.phone" [href]="'tel:' + settings?.phone" class="btn">Call to Enquire</a>
         <a *ngIf="settings?.whatsapp" [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp</a>
       </div>
+    </div>
+  </div>
+
+  <div *ngIf="videoOpen && getYoutubeEmbedUrl()" class="video-modal" (click)="closeVideo()">
+    <div class="video-modal-content" (click)="$event.stopPropagation()">
+      <button type="button" class="close-button" aria-label="Close video" (click)="closeVideo()">×</button>
+      <iframe
+        [src]="getSafeYoutubeEmbedUrl()"
+        title="Product video"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+        allowfullscreen
+      ></iframe>
     </div>
   </div>
 </section>

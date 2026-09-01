@@ -6,6 +6,7 @@ import { ApiService } from '../../services/api.service';
 import { Product } from '../../models/product.model';
 import { Category } from '../../models/category.model';
 import { resolveImageUrl } from '../../shared/resolve-image-url';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-products',
@@ -18,6 +19,7 @@ export class ProductsComponent implements OnInit {
   private api = inject(ApiService);
   private route = inject(ActivatedRoute);
   private router = inject(Router);
+  private cart = inject(CartService);
 
   products: Product[] = [];
   categories: Category[] = [];
@@ -58,5 +60,27 @@ export class ProductsComponent implements OnInit {
 
   resolveImageUrl(url?: string | null): string {
     return resolveImageUrl(url);
+  }
+
+  getDisplayPrice(product: Product): string {
+    if (!product.showPrice) return '—';
+    if (product.priceMode === 'offer') {
+      const offer = product.offerPrice ?? product.price;
+      const original = product.originalPrice ?? product.price;
+      return offer != null ? `₹${offer}` : original != null ? `₹${original}` : '—';
+    }
+    return product.price != null ? `₹${product.price}` : '—';
+  }
+
+  getOriginalPrice(product: Product): number | null {
+    if (product.priceMode === 'offer') {
+      return product.originalPrice ?? product.price ?? null;
+    }
+    return product.price ?? null;
+  }
+
+  addToCart(product: Product) {
+    this.cart.add(product);
+    this.router.navigate(['/cart']);
   }
 }

@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { RouterLink, RouterLinkActive } from '@angular/router';
 import { ApiService } from '../../services/api.service';
 import { SiteSettings } from '../../models/site-settings.model';
+import { resolveImageUrl } from '../resolve-image-url';
 
 @Component({
   selector: 'app-header',
@@ -21,6 +22,10 @@ export class HeaderComponent implements OnInit {
       next: (s) => (this.settings = s),
       error: () => (this.settings = null),
     });
+  }
+
+  resolveLogoUrl(url?: string | null): string {
+    return resolveImageUrl(url);
   }
 
   toggleMenu() {

@@ -7,12 +7,14 @@ import { CreateProductDto } from './dto/create-product.dto';
 import { UpdateProductDto } from './dto/update-product.dto';
 import { QueryProductsDto } from './dto/query-products.dto';
 import { CategoriesService } from '../categories/categories.service';
+import { UploadsService } from '../uploads/uploads.service';
 
 @Injectable()
 export class ProductsService {
   constructor(
     @InjectModel(Product.name) private productModel: Model<ProductDocument>,
     private categoriesService: CategoriesService,
+    private uploadsService: UploadsService,
   ) {}
 
   private async uniqueSlug(name: string, excludeId?: string): Promise<string> {
@@ -50,10 +52,24 @@ export class ProductsService {
 
     if (query.category) {
       const category = await this.categoriesService.findOneBySlugPublic(query.category);
-      filter.categoryId = category._id;
-    }
+      const categoryMatch = {
+        $or: [{ categoryId: category._id }, { categoryId: category._id.toString() }],
+      };
 
-    if (query.q) {
+      if (query.q) {
+        filter.$and = [
+          categoryMatch,
+          {
+            $or: [
+              { name: { $regex: query.q, $options: 'i' } },
+              { description: { $regex: query.q, $options: 'i' } },
+            ],
+          },
+        ];
+      } else {
+        filter.$or = categoryMatch.$or;
+      }
+    } else if (query.q) {
       filter.$or = [
         { name: { $regex: query.q, $options: 'i' } },
         { description: { $regex: query.q, $options: 'i' } },
@@ -94,10 +110,20 @@ export class ProductsService {
     return product.save();
   }
 
-  async archive(id: string) {
+  async remove(id: string) {
     const product = await this.findOneByIdForAdmin(id);
-    product.isActive = false;
-    await product.save();
-    return { archived: true };
+
+    if (product.imagePublicId) {
+      try {
+        await this.uploadsService.removeImage(product.imagePublicId);
+      } catch {
+        // Best-effort cleanup: the image can still be removed from the database even if the
+        // storage provider rejects the delete call. This prevents the API from failing on a
+        // non-critical storage cleanup step.
+      }
+    }
+
+    await this.productModel.deleteOne({ _id: id });
+    return { deleted: true };
   }
 }

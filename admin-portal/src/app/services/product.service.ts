@@ -20,7 +20,7 @@ export class ProductService {
   update(id: string, data: Partial<Product>) {
     return this.http.patch<Product>(`${this.base}/${id}`, data);
   }
-  archive(id: string) {
+  delete(id: string) {
     return this.http.delete(`${this.base}/${id}`);
   }
 }

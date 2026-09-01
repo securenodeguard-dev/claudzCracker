@@ -34,6 +34,28 @@ export class CreateProductDto {
   @Min(0)
   price?: number;
 
+  @ApiPropertyOptional({ example: 499 })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  originalPrice?: number;
+
+  @ApiPropertyOptional({ example: 399 })
+  @IsOptional()
+  @IsNumber()
+  @Min(0)
+  offerPrice?: number;
+
+  @ApiPropertyOptional({ example: 'offer', enum: ['regular', 'offer'] })
+  @IsOptional()
+  @IsString()
+  priceMode?: 'regular' | 'offer';
+
+  @ApiPropertyOptional({ example: 'https://www.youtube.com/watch?v=dQw4w9WgXcQ' })
+  @IsOptional()
+  @IsString()
+  youtubeVideoUrl?: string;
+
   @ApiPropertyOptional({ example: true })
   @IsOptional()
   @IsBoolean()

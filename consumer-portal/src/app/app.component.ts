@@ -8,11 +8,29 @@ import { FooterComponent } from './shared/footer/footer.component';
   standalone: true,
   imports: [RouterOutlet, HeaderComponent, FooterComponent],
   template: `
-    <app-header></app-header>
-    <main>
-      <router-outlet></router-outlet>
-    </main>
-    <app-footer></app-footer>
+    <div class="app-shell">
+      <app-header></app-header>
+      <main class="app-main">
+        <router-outlet></router-outlet>
+      </main>
+      <app-footer></app-footer>
+    </div>
   `,
+  styles: [
+    `
+      :host {
+        display: block;
+        min-height: 100vh;
+      }
+      .app-shell {
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+      .app-main {
+        flex: 1;
+      }
+    `,
+  ],
 })
 export class AppComponent {}

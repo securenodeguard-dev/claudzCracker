@@ -20,6 +20,18 @@ export class Product {
   @Prop({ type: Number, default: null })
   price: number | null;
 
+  @Prop({ type: Number, default: null })
+  originalPrice: number | null;
+
+  @Prop({ type: Number, default: null })
+  offerPrice: number | null;
+
+  @Prop({ type: String, enum: ['regular', 'offer'], default: 'regular' })
+  priceMode: 'regular' | 'offer';
+
+  @Prop({ type: String, default: '' })
+  youtubeVideoUrl: string;
+
   @Prop({ required: true, default: false })
   showPrice: boolean;
 

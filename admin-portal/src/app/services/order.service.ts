@@ -1,0 +1,38 @@
+import { HttpClient } from '@angular/common/http';
+import { Injectable, inject } from '@angular/core';
+import { environment } from '../../environments/environment';
+
+export interface OrderItem {
+  productId?: string;
+  productName: string;
+  quantity: number;
+  unitPrice: number;
+  total: number;
+}
+
+export interface Order {
+  _id: string;
+  customerName: string;
+  mobileNumber: string;
+  whatsappNumber?: string;
+  address?: string;
+  source?: string;
+  status?: string;
+  items: OrderItem[];
+  totalAmount: number;
+  createdAt?: string;
+}
+
+@Injectable({ providedIn: 'root' })
+export class OrderService {
+  private http = inject(HttpClient);
+  private base = `${environment.apiBaseUrl}/admin/orders`;
+
+  list() {
+    return this.http.get<Order[]>(this.base);
+  }
+
+  updateStatus(id: string, status: 'pending' | 'confirmed' | 'completed') {
+    return this.http.patch<Order>(`${this.base}/${id}/status`, { status });
+  }
+}

@@ -11,6 +11,7 @@ import { CategoriesModule } from './categories/categories.module';
 import { ProductsModule } from './products/products.module';
 import { UploadsModule } from './uploads/uploads.module';
 import { SiteSettingsModule } from './site-settings/site-settings.module';
+import { OrdersModule } from './orders/orders.module';
 
 @Controller('health')
 class HealthController {
@@ -48,6 +49,7 @@ class HealthController {
     ProductsModule,
     UploadsModule,
     SiteSettingsModule,
+    OrdersModule,
   ],
   controllers: [HealthController],
   providers: [

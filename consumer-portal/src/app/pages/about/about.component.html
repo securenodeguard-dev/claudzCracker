@@ -1,11 +1,61 @@
-<section class="container" style="padding: 32px 0;">
-  <h1>About {{ settings?.businessName || 'Us' }}</h1>
-  <p *ngIf="settings?.tagline">{{ settings?.tagline }}</p>
-  <p>
-    We stock a wide range of fireworks and crackers for every occasion. Browse our categories,
-    check what's in stock, and reach out by phone or WhatsApp for details — we're happy to help
-    you pick the right products.
-  </p>
-  <p *ngIf="settings?.address"><strong>Visit us:</strong> {{ settings?.address }}</p>
-  <p *ngIf="settings?.openingHours"><strong>Opening hours:</strong> {{ settings?.openingHours }}</p>
+<section class="container about-page" style="padding: 38px 0 56px;">
+  <div class="about-hero card">
+    <div>
+      <p class="eyebrow">About us</p>
+      <h1>{{ settings?.businessName || 'Cracker Shop' }}</h1>
+      <p class="tagline" *ngIf="settings?.tagline">{{ settings?.tagline }}</p>
+    </div>
+  </div>
+
+  <div class="about-grid">
+    <div class="card about-card">
+      <h3>Our story</h3>
+      <p>
+        We stock a curated range of fireworks, crackers, celebratory items, and festive essentials for every occasion.
+        Our focus is on safe, reliable quality, honest pricing, and a customer-first service experience.
+      </p>
+      <p>
+        Whether you are preparing for a wedding, festival, or a home celebration, we help you choose the right products with confidence.
+      </p>
+    </div>
+
+    <div class="card about-card premium">
+      <h3>What makes us different</h3>
+      <ul>
+        <li>Trusted product selection</li>
+        <li>Friendly local support</li>
+        <li>Fast order assistance</li>
+        <li>Professional customer service</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card info-panel">
+    <div>
+      <h3>Visit our store</h3>
+      <p *ngIf="settings?.address">{{ settings?.address }}</p>
+    </div>
+    <div>
+      <h3>Hours</h3>
+      <p *ngIf="settings?.openingHours">{{ settings?.openingHours }}</p>
+    </div>
+  </div>
 </section>
+
+<style>
+.about-page { display: grid; gap: 22px; }
+.about-hero {
+  padding: 30px 26px;
+  background: linear-gradient(135deg, #20163f 0%, #7a1f1f 100%);
+  color: white;
+}
+.about-hero h1, .about-hero .tagline { color: white; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; opacity: 0.8; margin-bottom: 12px; }
+.tagline { margin: 0; font-size: 1.05rem; }
+.about-grid { display: grid; grid-template-columns: 1.4fr 1fr; gap: 20px; }
+.about-card { padding: 24px; }
+.about-card ul { margin: 12px 0 0; padding-left: 18px; color: #2d1d15; }
+.about-card li + li { margin-top: 8px; }
+.about-card.premium { background: linear-gradient(145deg, #f9f3eb, #fff); }
+.info-panel { padding: 24px; display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 20px; }
+</style>

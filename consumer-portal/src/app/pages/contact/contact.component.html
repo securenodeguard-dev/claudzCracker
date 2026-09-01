@@ -1,15 +1,59 @@
-<section class="container" style="padding: 32px 0;">
-  <h1>Contact Us</h1>
-  <p *ngIf="settings?.address"><strong>Address:</strong> {{ settings?.address }}</p>
-  <p *ngIf="settings?.phone"><strong>Phone:</strong> <a [href]="'tel:' + settings?.phone">{{ settings?.phone }}</a></p>
-  <p *ngIf="settings?.whatsapp">
-    <strong>WhatsApp:</strong>
-    <a [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener">Chat with us</a>
-  </p>
-  <p *ngIf="settings?.email"><strong>Email:</strong> <a [href]="'mailto:' + settings?.email">{{ settings?.email }}</a></p>
-  <p *ngIf="settings?.openingHours"><strong>Opening hours:</strong> {{ settings?.openingHours }}</p>
+<section class="container contact-page" style="padding: 38px 0 56px;">
+  <div class="contact-header card">
+    <div>
+      <p class="eyebrow">Connect with us</p>
+      <h1>Contact</h1>
+    </div>
+  </div>
 
-  <div *ngIf="settings?.googleMapsUrl" style="margin-top: 24px;">
-    <a [href]="settings?.googleMapsUrl" target="_blank" rel="noopener" class="btn">Open in Google Maps</a>
+  <div class="contact-layout">
+    <div class="card contact-card">
+      <h3>Visit or call</h3>
+      <div class="contact-list" *ngIf="settings">
+        <p *ngIf="settings.address"><strong>Address:</strong> {{ settings.address }}</p>
+        <p *ngIf="settings.phone"><strong>Phone:</strong> <a [href]="'tel:' + settings.phone">{{ settings.phone }}</a></p>
+        <p *ngIf="settings.whatsapp">
+          <strong>WhatsApp:</strong>
+          <a [href]="'https://wa.me/' + settings.whatsapp" target="_blank" rel="noopener">Chat with us</a>
+        </p>
+        <p *ngIf="settings.email"><strong>Email:</strong> <a [href]="'mailto:' + settings.email">{{ settings.email }}</a></p>
+        <p *ngIf="settings.openingHours"><strong>Opening hours:</strong> {{ settings.openingHours }}</p>
+      </div>
+      <div *ngIf="settings?.googleMapsUrl" class="map-actions">
+        <a [href]="settings?.googleMapsUrl" target="_blank" rel="noopener" class="btn">Open in Google Maps</a>
+      </div>
+    </div>
+
+    <div class="card map-card" *ngIf="settings?.googleMapsUrl">
+      <iframe
+        [src]="getGoogleMapsEmbedUrl()"
+        title="Store location"
+        loading="lazy"
+        referrerpolicy="no-referrer-when-downgrade"
+        allowfullscreen>
+      </iframe>
+    </div>
   </div>
 </section>
+
+<style>
+.contact-page { display: grid; gap: 22px; }
+.contact-header {
+  padding: 26px 28px;
+  background: linear-gradient(135deg, #1d2d5c 0%, #7a1f1f 100%);
+  color: white;
+}
+.contact-header h1, .contact-header .eyebrow { color: white; }
+.eyebrow { text-transform: uppercase; letter-spacing: 0.12em; font-size: 0.72rem; opacity: 0.8; margin-bottom: 10px; }
+.contact-layout { display: grid; grid-template-columns: 0.9fr 1.1fr; gap: 20px; }
+.contact-card, .map-card { padding: 24px; }
+.contact-list { display: grid; gap: 12px; }
+.map-actions { margin-top: 16px; }
+.map-card iframe {
+  width: 100%;
+  min-height: 330px;
+  border: none;
+  border-radius: 14px;
+}
+@media (max-width: 760px) { .contact-layout { grid-template-columns: 1fr; } }
+</style>

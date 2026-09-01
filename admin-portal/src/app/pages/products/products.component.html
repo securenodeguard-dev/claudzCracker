@@ -30,12 +30,36 @@
 
     <div class="form-row two-col">
       <div>
-        <label for="price">Price (₹)</label>
-        <input id="price" type="number" formControlName="price" />
+        <label for="priceMode">Price Type</label>
+        <select id="priceMode" formControlName="priceMode">
+          <option value="regular">Regular price</option>
+          <option value="offer">Offer price (show original + offer)</option>
+        </select>
       </div>
       <div class="checkbox-row">
         <label><input type="checkbox" formControlName="showPrice" /> Show price publicly</label>
       </div>
+    </div>
+
+    <div class="form-row two-col">
+      <div>
+        <label for="price">Price (₹)</label>
+        <input id="price" type="number" formControlName="price" />
+      </div>
+      <div>
+        <label for="originalPrice">Original Price (₹)</label>
+        <input id="originalPrice" type="number" formControlName="originalPrice" />
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="offerPrice">Offer Price (₹)</label>
+      <input id="offerPrice" type="number" formControlName="offerPrice" />
+    </div>
+
+    <div class="form-row">
+      <label for="youtubeVideoUrl">YouTube Video URL</label>
+      <input id="youtubeVideoUrl" type="url" formControlName="youtubeVideoUrl" placeholder="https://youtu.be/... or https://youtube.com/watch?v=..." />
     </div>
 
     <div class="form-row">
@@ -76,11 +100,20 @@
           <td><img *ngIf="p.imageUrl" [src]="resolveImageUrl(p.imageUrl)" class="thumb" alt="" /></td>
           <td>{{ p.name }}</td>
           <td>{{ categoryName(p) }}</td>
-          <td>{{ p.showPrice && p.price != null ? ('₹' + p.price) : '—' }}</td>
+          <td>
+            <ng-container *ngIf="p.showPrice">
+              <span *ngIf="p.priceMode === 'offer' && p.originalPrice != null" class="strike">₹{{ p.originalPrice }}</span>
+              <span *ngIf="p.priceMode === 'offer' && (p.offerPrice ?? p.price) != null" class="offer-price">₹{{ p.offerPrice ?? p.price }}</span>
+              <span *ngIf="p.priceMode !== 'offer' && p.price != null">₹{{ p.price }}</span>
+              <span *ngIf="p.price == null && p.priceMode === 'offer' && p.offerPrice != null">₹{{ p.offerPrice }}</span>
+              <span *ngIf="p.showPrice && p.price == null && p.offerPrice == null && p.originalPrice == null">—</span>
+            </ng-container>
+            <span *ngIf="!p.showPrice">—</span>
+          </td>
           <td><span class="badge" [class.active]="p.isActive" [class.inactive]="!p.isActive">{{ p.isActive ? 'Active' : 'Archived' }}</span></td>
           <td class="row-actions">
             <button class="btn btn-secondary" (click)="edit(p)">Edit</button>
-            <button class="btn btn-danger" *ngIf="p.isActive" (click)="archive(p)">Archive</button>
+            <button class="btn btn-danger" (click)="deleteProduct(p)">Delete</button>
           </td>
         </tr>
       </tbody>

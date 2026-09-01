@@ -1,0 +1,57 @@
+<h1>Customer Orders</h1>
+
+<p *ngIf="loading">Loading orders…</p>
+<p *ngIf="!loading && orders.length === 0">No customer orders yet.</p>
+
+<div *ngIf="!loading && orders.length > 0" class="orders-list">
+  <div *ngFor="let order of orders" class="card order-card">
+    <div class="order-header">
+      <div class="order-title-wrap">
+        <h2>{{ order.customerName }}</h2>
+        <p>{{ order.mobileNumber }}<span *ngIf="order.whatsappNumber"> • WhatsApp: {{ order.whatsappNumber }}</span></p>
+      </div>
+
+      <div class="header-right">
+        <span class="status-badge">{{ order.status || 'pending' }}</span>
+      </div>
+    </div>
+
+    <div class="status-actions">
+      <button *ngFor="let status of statusOptions" type="button" class="btn btn-secondary" [disabled]="(order.status || 'pending') === status" (click)="updateStatus(order, status)">
+        {{ status === 'pending' ? 'Pending' : status === 'confirmed' ? 'Confirm' : 'Complete' }}
+      </button>
+    </div>
+
+    <div class="meta-row">
+      <span>Source: {{ order.source || 'Website' }}</span>
+      <span *ngIf="order.createdAt">{{ order.createdAt | date:'mediumDate' }}</span>
+    </div>
+
+    <div *ngIf="order.address" class="meta-row">
+      <strong>Address:</strong> {{ order.address }}
+    </div>
+
+    <table class="items-table">
+      <thead>
+        <tr>
+          <th>Product</th>
+          <th>Qty</th>
+          <th>Unit</th>
+          <th>Total</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let item of order.items">
+          <td>{{ item.productName }}</td>
+          <td>{{ item.quantity }}</td>
+          <td>₹{{ item.unitPrice }}</td>
+          <td>₹{{ item.total }}</td>
+        </tr>
+      </tbody>
+    </table>
+
+    <div class="order-footer">
+      <strong>Total:</strong> ₹{{ order.totalAmount }}
+    </div>
+  </div>
+</div>

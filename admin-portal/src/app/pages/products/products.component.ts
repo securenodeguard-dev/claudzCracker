@@ -9,13 +9,16 @@ import { Category } from '../../models/category.model';
 import { environment } from '../../../environments/environment';
 
 // Local-disk fallback uploads return a relative path like "/uploads/x.jpg"
-// (Cloudinary uploads return a full https:// URL already). A relative path
-// needs to resolve against the API host, not wherever this Angular app is
-// served from, so it can't be used as an <img src> directly.
-const apiOrigin = environment.apiBaseUrl.replace(/\/api\/v1\/?$/, '');
+// while production deployments may serve the API and app from the same origin.
+// Resolve relative asset paths against the configured API origin, then fall back
+// to the browser origin so the site works in both local and production hosting.
+const apiOrigin = environment?.apiBaseUrl ? environment.apiBaseUrl.replace(/\/api\/v1\/?$/, '') : window.location.origin;
 function resolveImageUrl(url?: string | null): string {
   if (!url) return '';
-  return url.startsWith('http') ? url : `${apiOrigin}${url}`;
+  if (url.startsWith('http://') || url.startsWith('https://')) return url;
+  if (url.startsWith('//')) return `https:${url}`;
+  const normalized = url.startsWith('/') ? url : `/${url}`;
+  return `${apiOrigin}${normalized}`;
 }
 
 @Component({
@@ -46,6 +49,10 @@ export class ProductsComponent implements OnInit {
     categoryId: ['', Validators.required],
     description: [''],
     price: [null as number | null],
+    originalPrice: [null as number | null],
+    offerPrice: [null as number | null],
+    priceMode: ['regular' as 'regular' | 'offer'],
+    youtubeVideoUrl: [''],
     showPrice: [true],
     sortOrder: [0],
     isActive: [true],
@@ -95,6 +102,10 @@ export class ProductsComponent implements OnInit {
       categoryId,
       description: product.description || '',
       price: product.price ?? null,
+      originalPrice: product.originalPrice ?? null,
+      offerPrice: product.offerPrice ?? null,
+      priceMode: product.priceMode ?? 'regular',
+      youtubeVideoUrl: product.youtubeVideoUrl ?? '',
       showPrice: product.showPrice,
       sortOrder: product.sortOrder,
       isActive: product.isActive,
@@ -112,6 +123,10 @@ export class ProductsComponent implements OnInit {
       categoryId: '',
       description: '',
       price: null,
+      originalPrice: null,
+      offerPrice: null,
+      priceMode: 'regular',
+      youtubeVideoUrl: '',
       showPrice: true,
       sortOrder: 0,
       isActive: true,
@@ -148,9 +163,9 @@ export class ProductsComponent implements OnInit {
     });
   }
 
-  archive(product: Product) {
-    if (!confirm(`Archive "${product.name}"? It will no longer show on the consumer site.`)) return;
-    this.productService.archive(product._id).subscribe({ next: () => this.load() });
+  deleteProduct(product: Product) {
+    if (!confirm(`Delete "${product.name}" permanently? This removes it from the database and storage.`)) return;
+    this.productService.delete(product._id).subscribe({ next: () => this.load() });
   }
 
   categoryName(product: Product): string {

@@ -1,5 +1,81 @@
-.site-footer { background: var(--color-primary-dark); color: #fff; margin-top: 48px; padding: 32px 0 16px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 24px; }
-.site-footer h3 { color: #fff; margin-top: 0; }
-.site-footer a { color: #ffe9c7; }
-.copyright { text-align: center; opacity: 0.8; margin-top: 24px; font-size: 0.85rem; }
+.site-footer {
+  background: linear-gradient(180deg, #2a1a1a 0%, #171311 100%);
+  color: #f7efe9;
+  margin-top: 52px;
+  padding: 36px 0 18px;
+  width: 100%;
+  box-shadow: inset 0 1px 0 rgba(255,255,255,0.04);
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 26px;
+  align-items: stretch;
+  min-height: 180px;
+}
+.footer-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+}
+.site-footer h3 {
+  color: #fff;
+  margin: 0 0 14px;
+  font-size: 1.15rem;
+}
+.site-footer p {
+  margin: 0 0 10px;
+  color: #f1d9c7;
+}
+.site-footer a {
+  color: #f4d3a0;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+.site-footer a:hover {
+  text-decoration: none;
+  color: #fff;
+}
+.footer-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.08);
+  font-size: 0.8rem;
+}
+.social-links {
+  display: flex;
+  gap: 12px;
+  margin-top: 8px;
+  flex-wrap: wrap;
+}
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: rgba(255,255,255,0.07);
+  border: 1px solid rgba(255,255,255,0.12);
+  color: #fff;
+}
+.social-links a:hover { background: rgba(255,255,255,0.12); }
+.social-links svg {
+  width: 18px;
+  height: 18px;
+  fill: currentColor;
+}
+.copyright {
+  text-align: center;
+  opacity: 0.85;
+  margin-top: 24px;
+  font-size: 0.85rem;
+  padding-top: 14px;
+  border-top: 1px solid rgba(255,255,255,0.15);
+}

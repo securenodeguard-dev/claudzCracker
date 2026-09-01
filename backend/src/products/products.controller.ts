@@ -58,8 +58,8 @@ export class ProductsAdminController {
   }
 
   @Delete(':id')
-  @ApiOperation({ summary: 'Archive / deactivate a product (soft delete)' })
+  @ApiOperation({ summary: 'Delete a product permanently and remove its image reference if available' })
   remove(@Param('id') id: string) {
-    return this.productsService.archive(id);
+    return this.productsService.remove(id);
   }
 }

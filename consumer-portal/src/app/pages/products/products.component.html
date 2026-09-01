@@ -30,12 +30,18 @@
   <p *ngIf="!loading && products.length === 0">No products found.</p>
 
   <div class="product-grid" *ngIf="!loading">
-    <a *ngFor="let p of products" [routerLink]="['/products', p.slug]" class="card product-card">
-      <img *ngIf="p.imageUrl" [src]="resolveImageUrl(p.imageUrl)" [alt]="p.name" />
+    <div *ngFor="let p of products" class="card product-card">
+      <a [routerLink]="['/products', p.slug]">
+        <img *ngIf="p.imageUrl" [src]="resolveImageUrl(p.imageUrl)" [alt]="p.name" />
+      </a>
       <div class="body">
         <h3>{{ p.name }}</h3>
-        <p *ngIf="p.showPrice && p.price != null" class="price">₹{{ p.price }}</p>
+        <div *ngIf="p.showPrice" class="price-row">
+          <span *ngIf="p.priceMode === 'offer' && getOriginalPrice(p) != null" class="original-price">₹{{ getOriginalPrice(p) }}</span>
+          <span class="price">{{ getDisplayPrice(p) }}</span>
+        </div>
+        <button type="button" class="btn add-to-cart" (click)="addToCart(p)">Add to Cart</button>
       </div>
-    </a>
+    </div>
   </div>
 </section>
