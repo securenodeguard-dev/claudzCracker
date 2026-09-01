@@ -1,0 +1,26 @@
+<h1>Dashboard</h1>
+<p *ngIf="loading">Loading…</p>
+
+<div class="stat-grid" *ngIf="!loading">
+  <div class="card stat">
+    <h2>{{ activeCategories }} / {{ totalCategories }}</h2>
+    <p>Active categories</p>
+    <a routerLink="/admin/categories">Manage categories →</a>
+  </div>
+  <div class="card stat">
+    <h2>{{ activeProducts }} / {{ totalProducts }}</h2>
+    <p>Active products</p>
+    <a routerLink="/admin/products">Manage products →</a>
+  </div>
+  <div class="card stat">
+    <h2>⚙</h2>
+    <p>Business info & contact details</p>
+    <a routerLink="/admin/settings">Edit site settings →</a>
+  </div>
+</div>
+
+<style>
+.stat-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; margin-top: 20px; }
+.stat h2 { margin: 0; font-size: 2rem; color: var(--color-primary); }
+.stat p { color: #6b5d4f; margin: 4px 0 12px; }
+</style>

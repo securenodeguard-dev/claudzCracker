@@ -1,0 +1,90 @@
+<h1>Products</h1>
+
+<div class="layout">
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>{{ editingId ? 'Edit Product' : 'Add Product' }}</h2>
+
+    <div class="form-row">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+      <p class="error" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+        Name is required (min 2 characters).
+      </p>
+    </div>
+
+    <div class="form-row">
+      <label for="categoryId">Category</label>
+      <select id="categoryId" formControlName="categoryId">
+        <option value="" disabled>Select a category</option>
+        <option *ngFor="let c of categories" [value]="c._id">{{ c.name }}</option>
+      </select>
+      <p class="error" *ngIf="form.controls.categoryId.touched && form.controls.categoryId.invalid">
+        Please select a category.
+      </p>
+    </div>
+
+    <div class="form-row">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3"></textarea>
+    </div>
+
+    <div class="form-row two-col">
+      <div>
+        <label for="price">Price (₹)</label>
+        <input id="price" type="number" formControlName="price" />
+      </div>
+      <div class="checkbox-row">
+        <label><input type="checkbox" formControlName="showPrice" /> Show price publicly</label>
+      </div>
+    </div>
+
+    <div class="form-row">
+      <label for="sortOrder">Sort Order</label>
+      <input id="sortOrder" type="number" formControlName="sortOrder" />
+    </div>
+
+    <div class="form-row checkbox-row">
+      <label><input type="checkbox" formControlName="isActive" /> Active</label>
+    </div>
+
+    <div class="form-row">
+      <label for="image">Product Image (jpg/png/webp, max 5MB)</label>
+      <input id="image" type="file" accept="image/jpeg,image/png,image/webp" (change)="onFileSelected($event)" />
+      <p *ngIf="uploading">Uploading…</p>
+      <img *ngIf="imagePreviewUrl" [src]="imagePreviewUrl" class="preview" alt="Preview" />
+    </div>
+
+    <p class="error" *ngIf="formError">{{ formError }}</p>
+
+    <div class="actions">
+      <button type="submit" class="btn" [disabled]="saving || uploading">
+        {{ saving ? 'Saving…' : editingId ? 'Update Product' : 'Add Product' }}
+      </button>
+      <button type="button" class="btn btn-secondary" *ngIf="editingId" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </form>
+
+  <div class="card">
+    <h2>All Products</h2>
+    <p *ngIf="loading">Loading…</p>
+    <table *ngIf="!loading">
+      <thead>
+        <tr><th>Image</th><th>Name</th><th>Category</th><th>Price</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let p of products">
+          <td><img *ngIf="p.imageUrl" [src]="resolveImageUrl(p.imageUrl)" class="thumb" alt="" /></td>
+          <td>{{ p.name }}</td>
+          <td>{{ categoryName(p) }}</td>
+          <td>{{ p.showPrice && p.price != null ? ('₹' + p.price) : '—' }}</td>
+          <td><span class="badge" [class.active]="p.isActive" [class.inactive]="!p.isActive">{{ p.isActive ? 'Active' : 'Archived' }}</span></td>
+          <td class="row-actions">
+            <button class="btn btn-secondary" (click)="edit(p)">Edit</button>
+            <button class="btn btn-danger" *ngIf="p.isActive" (click)="archive(p)">Archive</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!loading && products.length === 0">No products yet.</p>
+  </div>
+</div>

@@ -1,0 +1,14 @@
+<aside class="sidebar">
+  <div class="brand">Cracker Shop<br /><small>Admin</small></div>
+  <nav>
+    <a routerLink="/admin/dashboard" routerLinkActive="active">Dashboard</a>
+    <a routerLink="/admin/categories" routerLinkActive="active">Categories</a>
+    <a routerLink="/admin/products" routerLinkActive="active">Products</a>
+    <a routerLink="/admin/settings" routerLinkActive="active">Site Settings</a>
+  </nav>
+  <div class="admin-info" *ngIf="admin">
+    <p>{{ admin.name }}</p>
+    <p class="muted">{{ admin.email }}</p>
+    <button class="btn btn-secondary" (click)="logout()">Log out</button>
+  </div>
+</aside>

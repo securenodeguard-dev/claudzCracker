@@ -1,0 +1,20 @@
+<section class="container" style="padding: 24px 0;">
+  <p><a routerLink="/products">← Back to Products</a></p>
+
+  <p *ngIf="loading">Loading…</p>
+  <p *ngIf="notFound">Product not found.</p>
+
+  <div class="product-detail" *ngIf="product && !loading">
+    <img *ngIf="product.imageUrl" [src]="product.imageUrl" [alt]="product.name" class="detail-image" />
+    <div class="info">
+      <h1>{{ product.name }}</h1>
+      <p *ngIf="product.showPrice && product.price != null" class="price">₹{{ product.price }}</p>
+      <p>{{ product.description }}</p>
+
+      <div class="actions">
+        <a *ngIf="settings?.phone" [href]="'tel:' + settings?.phone" class="btn">Call to Enquire</a>
+        <a *ngIf="settings?.whatsapp" [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener" class="btn btn-outline">WhatsApp</a>
+      </div>
+    </div>
+  </div>
+</section>

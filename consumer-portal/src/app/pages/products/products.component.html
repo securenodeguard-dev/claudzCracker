@@ -1,0 +1,41 @@
+<section class="container" style="padding: 24px 0;">
+  <h1>Products</h1>
+
+  <div class="filters">
+    <input
+      type="text"
+      placeholder="Search products…"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearch()"
+      name="search"
+    />
+    <button class="btn" (click)="onSearch()">Search</button>
+  </div>
+
+  <div class="category-chips">
+    <button
+      class="chip"
+      [class.active]="!activeCategory"
+      (click)="selectCategory('')"
+    >All</button>
+    <button
+      *ngFor="let c of categories"
+      class="chip"
+      [class.active]="activeCategory === c.slug"
+      (click)="selectCategory(c.slug)"
+    >{{ c.name }}</button>
+  </div>
+
+  <p *ngIf="loading">Loading products…</p>
+  <p *ngIf="!loading && products.length === 0">No products found.</p>
+
+  <div class="product-grid" *ngIf="!loading">
+    <a *ngFor="let p of products" [routerLink]="['/products', p.slug]" class="card product-card">
+      <img *ngIf="p.imageUrl" [src]="resolveImageUrl(p.imageUrl)" [alt]="p.name" />
+      <div class="body">
+        <h3>{{ p.name }}</h3>
+        <p *ngIf="p.showPrice && p.price != null" class="price">₹{{ p.price }}</p>
+      </div>
+    </a>
+  </div>
+</section>

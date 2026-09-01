@@ -1,0 +1,16 @@
+<header class="site-header">
+  <div class="container bar">
+    <a routerLink="/" class="brand">
+      <img *ngIf="settings?.logoUrl" [src]="settings?.logoUrl" alt="{{ settings?.businessName }} logo" class="logo" />
+      <span>{{ settings?.businessName || 'Cracker Shop' }}</span>
+    </a>
+    <button class="menu-toggle" (click)="toggleMenu()" aria-label="Toggle navigation">☰</button>
+    <nav [class.open]="menuOpen">
+      <a routerLink="/" routerLinkActive="active" [routerLinkActiveOptions]="{exact: true}">Home</a>
+      <a routerLink="/about" routerLinkActive="active">About</a>
+      <a routerLink="/products" routerLinkActive="active">Products</a>
+      <a routerLink="/contact" routerLinkActive="active">Contact</a>
+      <a *ngIf="settings?.phone" [href]="'tel:' + settings?.phone" class="btn call-btn">Call Now</a>
+    </nav>
+  </div>
+</header>

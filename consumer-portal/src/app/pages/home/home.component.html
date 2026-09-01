@@ -1,0 +1,28 @@
+<section class="hero">
+  <div class="container">
+    <h1>{{ settings?.businessName || 'Cracker Shop' }}</h1>
+    <p class="tagline">{{ settings?.tagline || 'Your neighbourhood fireworks store' }}</p>
+    <a routerLink="/products" class="btn">Browse Products</a>
+  </div>
+</section>
+
+<section class="container">
+  <h2>Shop by Category</h2>
+  <p *ngIf="loading">Loading categories…</p>
+  <p *ngIf="!loading && categories.length === 0">Categories will appear here once added.</p>
+  <div class="category-grid" *ngIf="!loading">
+    <a *ngFor="let c of categories" [routerLink]="['/products']" [queryParams]="{ category: c.slug }" class="card category-card">
+      <h3>{{ c.name }}</h3>
+      <p *ngIf="c.description">{{ c.description }}</p>
+    </a>
+  </div>
+</section>
+
+<section class="container info-strip">
+  <div class="card">
+    <h3>Visit or call us</h3>
+    <p *ngIf="settings?.address">{{ settings?.address }}</p>
+    <p *ngIf="settings?.phone"><a [href]="'tel:' + settings?.phone">{{ settings?.phone }}</a></p>
+    <p *ngIf="settings?.openingHours">{{ settings?.openingHours }}</p>
+  </div>
+</section>

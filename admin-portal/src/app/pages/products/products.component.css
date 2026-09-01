@@ -1,0 +1,10 @@
+.layout { display: grid; grid-template-columns: 380px 1fr; gap: 20px; align-items: start; margin-top: 16px; }
+.two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; align-items: end; }
+.checkbox-row label { display: flex; align-items: center; gap: 8px; font-weight: 400; }
+.checkbox-row input { width: auto; }
+.actions { display: flex; gap: 10px; margin-top: 16px; }
+.row-actions { display: flex; gap: 8px; }
+.row-actions .btn { padding: 6px 12px; font-size: 0.8rem; }
+.preview { max-width: 100%; margin-top: 10px; border-radius: 6px; max-height: 160px; }
+.thumb { width: 48px; height: 48px; object-fit: cover; border-radius: 6px; }
+@media (max-width: 1000px) { .layout { grid-template-columns: 1fr; } }

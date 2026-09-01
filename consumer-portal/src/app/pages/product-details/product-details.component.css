@@ -1,0 +1,5 @@
+.product-detail { display: grid; grid-template-columns: 1fr 1fr; gap: 32px; align-items: start; }
+.detail-image { width: 100%; border-radius: var(--radius); box-shadow: var(--shadow); }
+.price { font-size: 1.4rem; color: var(--color-primary); font-weight: 700; }
+.actions { display: flex; gap: 12px; margin-top: 20px; }
+@media (max-width: 720px) { .product-detail { grid-template-columns: 1fr; } }

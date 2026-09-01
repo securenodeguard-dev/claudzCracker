@@ -1,0 +1,15 @@
+<section class="container" style="padding: 32px 0;">
+  <h1>Contact Us</h1>
+  <p *ngIf="settings?.address"><strong>Address:</strong> {{ settings?.address }}</p>
+  <p *ngIf="settings?.phone"><strong>Phone:</strong> <a [href]="'tel:' + settings?.phone">{{ settings?.phone }}</a></p>
+  <p *ngIf="settings?.whatsapp">
+    <strong>WhatsApp:</strong>
+    <a [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener">Chat with us</a>
+  </p>
+  <p *ngIf="settings?.email"><strong>Email:</strong> <a [href]="'mailto:' + settings?.email">{{ settings?.email }}</a></p>
+  <p *ngIf="settings?.openingHours"><strong>Opening hours:</strong> {{ settings?.openingHours }}</p>
+
+  <div *ngIf="settings?.googleMapsUrl" style="margin-top: 24px;">
+    <a [href]="settings?.googleMapsUrl" target="_blank" rel="noopener" class="btn">Open in Google Maps</a>
+  </div>
+</section>

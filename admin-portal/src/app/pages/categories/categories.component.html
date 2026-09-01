@@ -1,0 +1,60 @@
+<h1>Categories</h1>
+
+<div class="layout">
+  <form class="card" [formGroup]="form" (ngSubmit)="submit()">
+    <h2>{{ editingId ? 'Edit Category' : 'Add Category' }}</h2>
+
+    <div class="form-row">
+      <label for="name">Name</label>
+      <input id="name" formControlName="name" />
+      <p class="error" *ngIf="form.controls.name.touched && form.controls.name.invalid">
+        Name is required (min 2 characters).
+      </p>
+    </div>
+
+    <div class="form-row">
+      <label for="description">Description</label>
+      <textarea id="description" formControlName="description" rows="3"></textarea>
+    </div>
+
+    <div class="form-row">
+      <label for="sortOrder">Sort Order</label>
+      <input id="sortOrder" type="number" formControlName="sortOrder" />
+    </div>
+
+    <div class="form-row checkbox-row">
+      <label><input type="checkbox" formControlName="isActive" /> Active</label>
+    </div>
+
+    <p class="error" *ngIf="formError">{{ formError }}</p>
+
+    <div class="actions">
+      <button type="submit" class="btn" [disabled]="saving">
+        {{ saving ? 'Saving…' : editingId ? 'Update Category' : 'Add Category' }}
+      </button>
+      <button type="button" class="btn btn-secondary" *ngIf="editingId" (click)="cancelEdit()">Cancel</button>
+    </div>
+  </form>
+
+  <div class="card">
+    <h2>All Categories</h2>
+    <p *ngIf="loading">Loading…</p>
+    <table *ngIf="!loading">
+      <thead>
+        <tr><th>Name</th><th>Sort</th><th>Status</th><th></th></tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let c of categories">
+          <td>{{ c.name }}</td>
+          <td>{{ c.sortOrder }}</td>
+          <td><span class="badge" [class.active]="c.isActive" [class.inactive]="!c.isActive">{{ c.isActive ? 'Active' : 'Inactive' }}</span></td>
+          <td class="row-actions">
+            <button class="btn btn-secondary" (click)="edit(c)">Edit</button>
+            <button class="btn btn-danger" (click)="toggleActive(c)">{{ c.isActive ? 'Deactivate' : 'Activate' }}</button>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+    <p *ngIf="!loading && categories.length === 0">No categories yet.</p>
+  </div>
+</div>

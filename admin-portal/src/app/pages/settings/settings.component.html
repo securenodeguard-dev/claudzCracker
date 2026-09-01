@@ -1,0 +1,35 @@
+<h1>Site Settings</h1>
+<p *ngIf="loading">Loading…</p>
+
+<form class="card settings-form" [formGroup]="form" (ngSubmit)="submit()" *ngIf="!loading">
+  <div class="grid">
+    <div class="form-row"><label>Business Name</label><input formControlName="businessName" /></div>
+    <div class="form-row"><label>Tagline</label><input formControlName="tagline" /></div>
+    <div class="form-row"><label>Logo URL</label><input formControlName="logoUrl" /></div>
+    <div class="form-row"><label>Phone</label><input formControlName="phone" placeholder="+91XXXXXXXXXX" /></div>
+    <div class="form-row"><label>WhatsApp Number</label><input formControlName="whatsapp" placeholder="91XXXXXXXXXX" /></div>
+    <div class="form-row"><label>Email</label><input formControlName="email" type="email" /></div>
+  </div>
+
+  <div class="form-row"><label>Address</label><textarea formControlName="address" rows="2"></textarea></div>
+  <div class="form-row"><label>Google Maps URL</label><input formControlName="googleMapsUrl" /></div>
+  <div class="form-row"><label>Opening Hours</label><input formControlName="openingHours" placeholder="Mon–Sat, 9am–8pm" /></div>
+
+  <h3>Social Links</h3>
+  <div class="grid" formGroupName="socialLinks">
+    <div class="form-row"><label>Facebook</label><input formControlName="facebook" /></div>
+    <div class="form-row"><label>Instagram</label><input formControlName="instagram" /></div>
+    <div class="form-row"><label>YouTube</label><input formControlName="youtube" /></div>
+  </div>
+
+  <p class="error" *ngIf="formError">{{ formError }}</p>
+  <p style="color: #1c6b1c;" *ngIf="saved">Settings saved.</p>
+
+  <button type="submit" class="btn" [disabled]="saving">{{ saving ? 'Saving…' : 'Save Settings' }}</button>
+</form>
+
+<style>
+.settings-form { margin-top: 16px; max-width: 700px; }
+.grid { display: grid; grid-template-columns: 1fr 1fr; gap: 4px 16px; }
+@media (max-width: 700px) { .grid { grid-template-columns: 1fr; } }
+</style>

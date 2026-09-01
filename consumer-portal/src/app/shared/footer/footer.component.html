@@ -1,0 +1,28 @@
+<footer class="site-footer">
+  <div class="container grid">
+    <div>
+      <h3>{{ settings?.businessName || 'Cracker Shop' }}</h3>
+      <p *ngIf="settings?.tagline">{{ settings?.tagline }}</p>
+      <p *ngIf="settings?.address">{{ settings?.address }}</p>
+      <p *ngIf="settings?.openingHours">Hours: {{ settings?.openingHours }}</p>
+    </div>
+    <div>
+      <h3>Contact</h3>
+      <p *ngIf="settings?.phone"><a [href]="'tel:' + settings?.phone">Call: {{ settings?.phone }}</a></p>
+      <p *ngIf="settings?.whatsapp">
+        <a [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener">WhatsApp</a>
+      </p>
+      <p *ngIf="settings?.email"><a [href]="'mailto:' + settings?.email">{{ settings?.email }}</a></p>
+      <p *ngIf="settings?.googleMapsUrl">
+        <a [href]="settings?.googleMapsUrl" target="_blank" rel="noopener">View on Google Maps</a>
+      </p>
+    </div>
+    <div>
+      <h3>Follow</h3>
+      <p *ngIf="settings?.socialLinks?.facebook"><a [href]="settings?.socialLinks?.facebook" target="_blank" rel="noopener">Facebook</a></p>
+      <p *ngIf="settings?.socialLinks?.instagram"><a [href]="settings?.socialLinks?.instagram" target="_blank" rel="noopener">Instagram</a></p>
+      <p *ngIf="settings?.socialLinks?.youtube"><a [href]="settings?.socialLinks?.youtube" target="_blank" rel="noopener">YouTube</a></p>
+    </div>
+  </div>
+  <p class="copyright">© {{ year }} {{ settings?.businessName || 'Cracker Shop' }}. All rights reserved.</p>
+</footer>
