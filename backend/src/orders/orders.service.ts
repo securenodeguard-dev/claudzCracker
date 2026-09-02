@@ -27,7 +27,7 @@ export class OrdersService {
   }
 
   async findAllForAdmin() {
-    return this.orderModel.find().sort({ createdAt: -1 });
+    return this.orderModel.find({ archived: { $ne: true } }).sort({ createdAt: -1 });
   }
 
   async findOneByIdForAdmin(id: string) {
@@ -47,5 +47,19 @@ export class OrdersService {
     order.status = normalized;
     await order.save();
     return order;
+  }
+
+  async archive(id: string) {
+    const order = await this.findOneByIdForAdmin(id);
+    order.archived = true;
+    order.archivedAt = new Date();
+    await order.save();
+    return order;
+  }
+
+  async remove(id: string) {
+    const order = await this.orderModel.findByIdAndDelete(id);
+    if (!order) throw new NotFoundException('Order not found');
+    return { deleted: true };
   }
 }

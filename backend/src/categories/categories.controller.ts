@@ -55,4 +55,10 @@ export class CategoriesAdminController {
   remove(@Param('id') id: string) {
     return this.categoriesService.remove(id);
   }
+
+  @Delete(':id/hard')
+  @ApiOperation({ summary: 'Hard delete a category (permanent)' })
+  hardRemove(@Param('id') id: string) {
+    return this.categoriesService.hardRemove(id);
+  }
 }

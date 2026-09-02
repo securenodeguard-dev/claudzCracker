@@ -89,4 +89,14 @@ export class CategoriesComponent implements OnInit {
       next: () => this.load(),
     });
   }
+
+  deleteCategory(category: Category) {
+    if (!category?._id) return;
+    const ok = confirm(`Delete category '${category.name}'? This cannot be undone.`);
+    if (!ok) return;
+    this.categoryService.remove(category._id).subscribe({
+      next: () => this.load(),
+      error: () => alert('Failed to delete category'),
+    });
+  }
 }

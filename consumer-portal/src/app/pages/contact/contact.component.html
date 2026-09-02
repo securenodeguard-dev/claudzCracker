@@ -24,9 +24,9 @@
       </div>
     </div>
 
-    <div class="card map-card" *ngIf="settings?.googleMapsUrl">
+    <div class="card map-card" *ngIf="embedUrl">
       <iframe
-        [src]="getGoogleMapsEmbedUrl()"
+        [src]="embedUrl"
         title="Store location"
         loading="lazy"
         referrerpolicy="no-referrer-when-downgrade"

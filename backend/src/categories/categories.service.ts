@@ -59,11 +59,17 @@ export class CategoriesService {
   async remove(id: string) {
     const category = await this.findOneById(id);
     // Soft-delete only — categories are referenced by products, so a hard
-    // delete could orphan product records. Deactivating hides it from the
-    // public site while preserving history for the admin.
+    // Soft-delete only — kept for backward compatibility. Use `hardRemove`
+    // when a permanent deletion is required.
     category.isActive = false;
     await category.save();
     return { deactivated: true };
+  }
+
+  async hardRemove(id: string) {
+    const res = await this.categoryModel.findByIdAndDelete(id);
+    if (!res) throw new NotFoundException('Category not found');
+    return { removed: true };
   }
 
   async assertExistsAndActive(id: string) {

@@ -46,6 +46,12 @@ export class Order {
 
   @Prop({ required: true, default: 0 })
   totalAmount: number;
+  
+  @Prop({ type: Boolean, default: false })
+  archived: boolean;
+
+  @Prop({ type: Date, default: null })
+  archivedAt: Date | null;
 }
 
 export const OrderItemSchema = SchemaFactory.createForClass(OrderItem);

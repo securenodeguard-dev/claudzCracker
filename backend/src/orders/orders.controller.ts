@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from '@nestjs/common';
 import { ApiBearerAuth, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../common/guards/jwt-auth.guard';
 import { CreateOrderDto } from './dto/create-order.dto';
@@ -39,5 +39,17 @@ export class OrdersAdminController {
   @ApiOperation({ summary: 'Update an order status' })
   updateStatus(@Param('id') id: string, @Body() body: { status: string }) {
     return this.ordersService.updateStatus(id, body.status);
+  }
+
+  @Patch(':id/archive')
+  @ApiOperation({ summary: 'Archive (soft-delete) an order' })
+  archive(@Param('id') id: string) {
+    return this.ordersService.archive(id);
+  }
+
+  @Delete(':id')
+  @ApiOperation({ summary: 'Delete an order (hard delete)' })
+  delete(@Param('id') id: string) {
+    return this.ordersService.remove(id);
   }
 }

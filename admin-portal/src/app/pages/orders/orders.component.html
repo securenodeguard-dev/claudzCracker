@@ -3,16 +3,28 @@
 <p *ngIf="loading">Loading orders…</p>
 <p *ngIf="!loading && orders.length === 0">No customer orders yet.</p>
 
-<div *ngIf="!loading && orders.length > 0" class="orders-list">
-  <div *ngFor="let order of orders" class="card order-card">
+<div *ngIf="!loading && orders.length > 0">
+  <div class="filter-tabs">
+    <button type="button" [class.active]="selectedFilter==='all'" (click)="selectedFilter='all'">All</button>
+    <button type="button" [class.active]="selectedFilter==='pending'" (click)="selectedFilter='pending'">Pending</button>
+    <button type="button" [class.active]="selectedFilter==='confirmed'" (click)="selectedFilter='confirmed'">Confirmed</button>
+    <button type="button" [class.active]="selectedFilter==='completed'" (click)="selectedFilter='completed'">Completed</button>
+  </div>
+
+  <div class="orders-list">
+    <div *ngFor="let order of filteredOrders" class="card order-card">
     <div class="order-header">
       <div class="order-title-wrap">
         <h2>{{ order.customerName }}</h2>
-        <p>{{ order.mobileNumber }}<span *ngIf="order.whatsappNumber"> • WhatsApp: {{ order.whatsappNumber }}</span></p>
+        <p><strong>Contact:</strong> <a [href]="'tel:' + order.mobileNumber">{{ order.mobileNumber }}</a></p>
+        <p *ngIf="order.whatsappNumber"><strong>WhatsApp:</strong> <a [href]="'https://wa.me/' + order.whatsappNumber" target="_blank" rel="noopener">{{ order.whatsappNumber }}</a></p>
       </div>
 
       <div class="header-right">
         <span class="status-badge">{{ order.status || 'pending' }}</span>
+        <button type="button" class="delete-btn" title="Delete order" (click)="deleteOrder(order)">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 6h18M8 6v12a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2V6M10 6V4a2 2 0 0 1 2-2h0a2 2 0 0 1 2 2v2"/></svg>
+        </button>
       </div>
     </div>
 
@@ -30,6 +42,8 @@
     <div *ngIf="order.address" class="meta-row">
       <strong>Address:</strong> {{ order.address }}
     </div>
+
+    <!-- Map preview intentionally removed from admin orders UI -->
 
     <table class="items-table">
       <thead>

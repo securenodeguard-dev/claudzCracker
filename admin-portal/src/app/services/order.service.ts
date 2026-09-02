@@ -35,4 +35,8 @@ export class OrderService {
   updateStatus(id: string, status: 'pending' | 'confirmed' | 'completed') {
     return this.http.patch<Order>(`${this.base}/${id}/status`, { status });
   }
+
+  remove(id: string) {
+    return this.http.delete(`${this.base}/${id}`);
+  }
 }

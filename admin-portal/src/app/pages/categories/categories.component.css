@@ -4,4 +4,7 @@
 .actions { display: flex; gap: 10px; margin-top: 16px; }
 .row-actions { display: flex; gap: 8px; }
 .row-actions .btn { padding: 6px 12px; font-size: 0.8rem; }
+.btn-trash { background: transparent; border: none; color: #b33a3a; padding: 6px; border-radius: 6px; cursor: pointer; display: inline-flex; align-items: center; justify-content: center; }
+.btn-trash svg { width: 16px; height: 16px; stroke: currentColor; fill: none; stroke-width: 1.5; }
+.btn-trash:hover { background: rgba(179,58,58,0.08); }
 @media (max-width: 900px) { .layout { grid-template-columns: 1fr; } }

@@ -20,4 +20,8 @@ export class CategoryService {
   deactivate(id: string) {
     return this.http.delete(`${this.base}/${id}`);
   }
+  // Permanently remove (hard delete) the category from the DB
+  remove(id: string) {
+    return this.http.delete(`${this.base}/${id}/hard`);
+  }
 }

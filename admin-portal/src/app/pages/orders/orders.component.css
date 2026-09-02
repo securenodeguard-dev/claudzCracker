@@ -4,6 +4,9 @@
 .order-title-wrap { flex: 1; }
 .order-header h2 { margin: 0; }
 .header-right { display: flex; align-items: center; justify-content: flex-end; }
+.delete-btn { background: transparent; border: none; margin-left: 10px; cursor: pointer; color: #b33a3a; display: inline-flex; align-items: center; justify-content: center; padding: 6px; border-radius: 8px; }
+.delete-btn:hover { background: rgba(179,58,58,0.08); }
+.delete-btn svg { width: 18px; height: 18px; stroke: currentColor; fill: none; stroke-width: 1.5; }
 .status-badge {
   background: #fff7d9;
   color: #7e5610;
@@ -19,6 +22,10 @@
 .status-actions .btn:nth-child(3) { background: linear-gradient(135deg, #2a6b45, #56b77d); }
 .status-actions .btn:nth-child(4) { background: linear-gradient(135deg, #274d94, #5489d9); }
 .meta-row { display: flex; gap: 16px; flex-wrap: wrap; color: #4d4d4d; margin-top: 10px; }
+.filter-tabs { display:flex; gap:8px; margin-bottom:12px; }
+.filter-tabs button { padding:6px 10px; border-radius:8px; border:1px solid #ddd; background:transparent; cursor:pointer; }
+.filter-tabs button.active { background:linear-gradient(90deg,#f0f4ff,#eef8f3); border-color:#cdd7f2; }
+/* order-map removed for admin UI */
 .items-table { width: 100%; border-collapse: collapse; margin-top: 16px; }
 .items-table th, .items-table td { text-align: left; padding: 8px 10px; border-bottom: 1px solid #e8e8e8; }
 .order-footer { margin-top: 16px; text-align: right; }
