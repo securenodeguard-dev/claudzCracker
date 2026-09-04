@@ -25,6 +25,7 @@ export class ProductsComponent implements OnInit {
   categories: Category[] = [];
   activeCategory = '';
   searchTerm = '';
+  offerOnly = false;
   loading = true;
 
   ngOnInit() {
@@ -33,6 +34,7 @@ export class ProductsComponent implements OnInit {
     this.route.queryParams.subscribe((params) => {
       this.activeCategory = params['category'] || '';
       this.searchTerm = params['q'] || '';
+      this.offerOnly = params['offer'] === 'true';
       this.loadProducts();
     });
   }
@@ -43,7 +45,7 @@ export class ProductsComponent implements OnInit {
       .getProducts({ category: this.activeCategory || undefined, q: this.searchTerm || undefined })
       .subscribe({
         next: (p) => {
-          this.products = p;
+          this.products = this.offerOnly ? p.filter((product) => product.priceMode === 'offer') : p;
           this.loading = false;
         },
         error: () => (this.loading = false),
@@ -77,6 +79,11 @@ export class ProductsComponent implements OnInit {
       return product.originalPrice ?? product.price ?? null;
     }
     return product.price ?? null;
+  }
+
+  getSavings(product: Product): number | null {
+    if (product.priceMode !== 'offer' || product.originalPrice == null || product.offerPrice == null) return null;
+    return Math.max(0, product.originalPrice - product.offerPrice);
   }
 
   addToCart(product: Product) {

@@ -36,9 +36,11 @@
       </a>
       <div class="body">
         <h3>{{ p.name }}</h3>
+        <span *ngIf="p.priceMode === 'offer'" class="offer-badge">Festival Offer</span>
         <div *ngIf="p.showPrice" class="price-row">
-          <span *ngIf="p.priceMode === 'offer' && getOriginalPrice(p) != null" class="original-price">₹{{ getOriginalPrice(p) }}</span>
+          <del *ngIf="p.priceMode === 'offer' && getOriginalPrice(p) != null && getDisplayPrice(p) !== '₹' + getOriginalPrice(p)" class="original-price">₹{{ getOriginalPrice(p) }}</del>
           <span class="price">{{ getDisplayPrice(p) }}</span>
+          <span *ngIf="getSavings(p) != null" class="saving">Save ₹{{ getSavings(p) }}</span>
         </div>
         <button type="button" class="btn add-to-cart" (click)="addToCart(p)">Add to Cart</button>
       </div>

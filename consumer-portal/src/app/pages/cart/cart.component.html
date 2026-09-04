@@ -9,6 +9,7 @@
   <div *ngIf="submitted" class="success-box">
     <h2>Thank you!</h2>
     <p>Your order has been submitted successfully. Our team will contact you shortly.</p>
+    <a *ngIf="whatsappUrl" [href]="whatsappUrl" target="_blank" rel="noopener" class="btn whatsapp-btn">Send Order on WhatsApp</a>
     <a routerLink="/products" class="btn">Continue Shopping</a>
   </div>
 

@@ -11,5 +11,6 @@ export function resolveImageUrl(url?: string | null): string {
   if (url.startsWith('http://') || url.startsWith('https://')) return url;
   if (url.startsWith('//')) return `https:${url}`;
   const normalized = url.startsWith('/') ? url : `/${url}`;
+  if (normalized.startsWith('/assets/')) return `${window.location.origin}${normalized}`;
   return `${apiOrigin}${normalized}`;
 }

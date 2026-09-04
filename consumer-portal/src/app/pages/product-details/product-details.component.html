@@ -9,7 +9,7 @@
     <div class="info">
       <h1>{{ product.name }}</h1>
       <div *ngIf="product.showPrice" class="price-row">
-        <span *ngIf="product.priceMode === 'offer' && getOriginalPrice() != null" class="original-price">₹{{ getOriginalPrice() }}</span>
+        <del *ngIf="product.priceMode === 'offer' && getOriginalPrice() != null && getDisplayPrice() !== '₹' + getOriginalPrice()" class="original-price">₹{{ getOriginalPrice() }}</del>
         <span class="price">{{ getDisplayPrice() }}</span>
       </div>
       <p>{{ product.description }}</p>

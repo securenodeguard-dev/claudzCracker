@@ -6,6 +6,8 @@ import { HttpClient } from '@angular/common/http';
 import { environment } from '../../../environments/environment';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../models/product.model';
+import { SiteSettings } from '../../models/site-settings.model';
+import { ApiService } from '../../services/api.service';
 import { resolveImageUrl } from '../../shared/resolve-image-url';
 
 @Component({
@@ -18,6 +20,7 @@ import { resolveImageUrl } from '../../shared/resolve-image-url';
 export class CartComponent {
   private cart = inject(CartService);
   private http = inject(HttpClient);
+  private api = inject(ApiService);
 
   items = this.cart.getItems();
   customerName = '';
@@ -28,6 +31,13 @@ export class CartComponent {
   submitting = false;
   submitted = false;
   error = '';
+  whatsappUrl = '';
+
+  private settings: SiteSettings | null = null;
+
+  constructor() {
+    this.api.getSiteSettings().subscribe({ next: (settings) => (this.settings = settings) });
+  }
 
   getTotal() {
     return this.cart.getTotal();
@@ -80,6 +90,7 @@ export class CartComponent {
       next: () => {
         this.submitting = false;
         this.submitted = true;
+        this.whatsappUrl = this.buildWhatsappUrl(payload);
         this.cart.clear();
         this.items = [];
       },
@@ -88,5 +99,35 @@ export class CartComponent {
         this.error = 'Unable to place order right now. Please try again.';
       },
     });
+  }
+
+  private buildWhatsappUrl(payload: {
+    customerName: string;
+    mobileNumber: string;
+    whatsappNumber: string;
+    address: string;
+    source: string;
+    items: { productName: string; quantity: number; unitPrice: number; total: number }[];
+  }): string {
+    const businessNumber = (this.settings?.whatsapp || '').replace(/\D/g, '');
+    if (!businessNumber) return '';
+
+    const items = payload.items
+      .map((item) => `- ${item.productName} x${item.quantity}: ₹${item.total}`)
+      .join('\n');
+    const message = [
+      'New order request',
+      `Name: ${payload.customerName}`,
+      `Mobile: ${payload.mobileNumber}`,
+      `WhatsApp: ${payload.whatsappNumber || 'Not provided'}`,
+      `Address: ${payload.address || 'Not provided'}`,
+      `Source: ${payload.source || 'Website'}`,
+      '',
+      'Items:',
+      items,
+      `Total: ₹${payload.items.reduce((total, item) => total + item.total, 0)}`,
+    ].join('\n');
+
+    return `https://wa.me/${businessNumber}?text=${encodeURIComponent(message)}`;
   }
 }

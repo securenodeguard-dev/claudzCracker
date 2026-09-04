@@ -1,9 +1,20 @@
 <section class="hero">
+  <div class="hero-stars" aria-hidden="true"><span>✦</span><span>·</span><span>✧</span><span>·</span><span>✦</span></div>
   <div class="container">
+    <p class="hero-kicker">SAFELY PACKED • FESTIVE DELIVERY • BIG CELEBRATIONS</p>
+    <img [src]="resolveImageUrl(settings?.logoUrl || '/assets/logo.jpg')" [alt]="settings?.businessName || 'Cracker Shop'" class="hero-logo" />
     <h1>{{ settings?.businessName || 'Cracker Shop' }}</h1>
     <p class="tagline">{{ settings?.tagline || 'Your neighbourhood fireworks store' }}</p>
-    <a routerLink="/products" class="btn">Browse Products</a>
+    <p class="hero-copy">Light up your celebration with hand-picked crackers, joyful colours, and doorstep-ready bundles.</p>
+    <div class="hero-actions"><a routerLink="/products" class="btn">Shop Crackers</a><a routerLink="/products" [queryParams]="{ offer: true }" class="btn btn-outline hero-offers">View Offers</a></div>
   </div>
+</section>
+
+<section class="container trust-strip" aria-label="Shopping benefits">
+  <div><strong>✦ Licensed selection</strong><span>Quality checked products</span></div>
+  <div><strong>↗ Fast delivery</strong><span>Careful festive packing</span></div>
+  <div><strong>◉ WhatsApp support</strong><span>Quick help before you order</span></div>
+  <div><strong>♢ Safe celebration</strong><span>Guidance for every family</span></div>
 </section>
 
 <section class="container">
@@ -12,8 +23,21 @@
   <p *ngIf="!loading && categories.length === 0">Categories will appear here once added.</p>
   <div class="category-grid" *ngIf="!loading">
     <a *ngFor="let c of categories" [routerLink]="['/products']" [queryParams]="{ category: c.slug }" class="card category-card">
+      <span class="category-icon">{{ resolveCategoryIcon(c.name) }}</span>
       <h3>{{ c.name }}</h3>
       <p *ngIf="c.description">{{ c.description }}</p>
+      <span class="category-link">Explore collection →</span>
+    </a>
+  </div>
+</section>
+
+<section class="container offer-section" *ngIf="offerProducts.length">
+  <div class="section-title-row"><div><p class="eyebrow">CELEBRATION PICKS</p><h2>Festival offers</h2></div><a routerLink="/products" class="text-link">See all crackers →</a></div>
+  <div class="offer-grid">
+    <a *ngFor="let product of offerProducts" [routerLink]="['/products', product.slug]" class="card offer-card">
+      <span class="offer-ribbon">OFFER</span>
+      <img *ngIf="product.imageUrl" [src]="resolveImageUrl(product.imageUrl)" [alt]="product.name" />
+      <div class="offer-body"><h3>{{ product.name }}</h3><p class="offer-price">₹{{ product.offerPrice ?? product.price }}</p><del *ngIf="product.originalPrice != null">₹{{ product.originalPrice }}</del><span *ngIf="getSavings(product) != null" class="saving">Save ₹{{ getSavings(product) }}</span></div>
     </a>
   </div>
 </section>

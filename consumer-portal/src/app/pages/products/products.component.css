@@ -7,7 +7,9 @@
 .product-card img { width: 100%; height: 160px; object-fit: cover; }
 .product-card .body { padding: 12px; }
 .product-card h3 { margin: 0 0 6px; font-size: 1rem; }
+.offer-badge { display: inline-block; background: #fff0d0; color: #986111; padding: 3px 7px; border-radius: 4px; font-size: 0.65rem; font-weight: 800; margin-bottom: 7px; }
 .price-row { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
 .original-price { text-decoration: line-through; color: #777; font-size: 0.9rem; }
 .price { color: var(--color-primary); font-weight: 700; margin: 0; }
+.saving { color: #168c4a; font-size: 0.68rem; font-weight: 800; }
 .add-to-cart { margin-top: 12px; width: 100%; }

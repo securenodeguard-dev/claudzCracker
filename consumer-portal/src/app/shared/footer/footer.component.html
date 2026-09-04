@@ -1,26 +1,36 @@
 <footer class="site-footer">
-  <div class="container grid">
-    <div class="footer-column brand-column">
-      <h3>{{ settings?.businessName || 'Cracker Shop' }}</h3>
-      <p *ngIf="settings?.tagline">{{ settings?.tagline }}</p>
-      <p *ngIf="settings?.address">{{ settings?.address }}</p>
-      <p *ngIf="settings?.openingHours">Hours: {{ settings?.openingHours }}</p>
+  <div class="newsletter-band">
+    <div class="container newsletter-content">
+      <strong>To know more about our Products, Offers, and Discounts</strong>
+      <span>Subscribe to our Newsletter!</span>
     </div>
+  </div>
 
-    <div class="footer-column">
-      <h3>Contact</h3>
-      <p *ngIf="settings?.phone"><a [href]="'tel:' + settings?.phone"><span class="footer-icon">☎</span> {{ settings?.phone }}</a></p>
-      <p *ngIf="settings?.whatsapp">
-        <a [href]="'https://wa.me/' + settings?.whatsapp" target="_blank" rel="noopener"><span class="footer-icon">✆</span> WhatsApp</a>
-      </p>
-      <p *ngIf="settings?.email"><a [href]="'mailto:' + settings?.email"><span class="footer-icon">✉</span> {{ settings?.email }}</a></p>
-      <p *ngIf="settings?.googleMapsUrl">
-        <a [href]="settings?.googleMapsUrl" target="_blank" rel="noopener"><span class="footer-icon">⌖</span> View on Google Maps</a>
-      </p>
+  <div class="container benefits-row">
+    <div class="benefit"><span class="benefit-icon">◈</span><div><strong>Express Shipping</strong><small>Quick & priority shipping<br />all over Tamilnadu & India</small></div></div>
+    <div class="benefit"><span class="benefit-icon">♙</span><div><strong>Customer Support</strong><small>Support available from<br />Mon-Sat 10 AM to 5 PM IST</small></div></div>
+    <div class="benefit"><span class="benefit-icon">▣</span><div><strong>Online Payment</strong><small>Pay securely through<br />Card, Net Banking, UPI, Wallet</small></div></div>
+    <div class="benefit"><span class="benefit-icon">▤</span><div><strong>Safe Packing</strong><small>Packaging done as per<br />industry compliant standards</small></div></div>
+  </div>
+
+  <div class="container footer-main">
+    <div class="footer-column footer-links">
+      <h3>Our Company</h3>
+      <a href="#">About Us</a><a href="#">Blog</a><a href="#">Testimonials</a><a href="#">Contact Us</a>
     </div>
-
-    <div class="footer-column">
-      <h3>Follow</h3>
+    <div class="footer-column footer-links">
+      <h3>Our Policies</h3>
+      <a href="#">Delivery Policy</a><a href="#">Refund Policy</a><a href="#">Terms & Conditions</a><a href="#">Privacy Policy</a>
+    </div>
+    <div class="footer-column footer-links">
+      <h3>Useful Links</h3>
+      <a href="#">About Fireworks</a><a href="#">Safety Measures</a><a href="#">Do’s & Don’ts</a><a href="#">FAQ’s</a>
+    </div>
+    <div class="footer-column contact-column">
+      <img [src]="resolveLogoUrl(settings?.logoUrl)" [alt]="settings?.businessName || 'Cracker Shop'" class="footer-logo" />
+      <p *ngIf="settings?.address"><span class="footer-icon">⌖</span>{{ settings?.address }}</p>
+      <p *ngIf="settings?.phone"><a [href]="'tel:' + settings?.phone"><span class="footer-icon">☎</span>{{ settings?.phone }}</a></p>
+      <p *ngIf="settings?.email"><a [href]="'mailto:' + settings?.email"><span class="footer-icon">✉</span>{{ settings?.email }}</a></p>
       <div class="social-links">
         <a *ngIf="settings?.socialLinks?.facebook" [href]="settings?.socialLinks?.facebook" target="_blank" rel="noopener" aria-label="Facebook" title="Facebook">
           <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14.5 8.5h2V5h-2.4c-2.8 0-4.1 1.7-4.1 4.3V11H7v3.5h3v7h3.5v-7H16l.5-3.5h-3.5V9.7c0-.9.9-1.2 1.5-1.2z" /></svg>
@@ -34,5 +44,6 @@
       </div>
     </div>
   </div>
+  <p class="footer-note">As per the 2018 Supreme Court order, online sale of fireworks is not permitted. We value our customers and follow all applicable safety and transport regulations.</p>
   <p class="copyright">© {{ year }} {{ settings?.businessName || 'Cracker Shop' }}. All rights reserved.</p>
 </footer>
